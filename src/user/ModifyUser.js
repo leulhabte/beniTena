@@ -4,6 +4,7 @@ import {TextField, Grid, Paper, Button, Box, Avatar, Container} from '@material-
 import userImage from '../Res/user.jpg';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import Loading from '../Components/Loading';
 import {withRouter} from 'react-router-dom'
 import {AccountCircle, Security, VpnKey, VerifiedUser} from '@material-ui/icons';
 
@@ -11,9 +12,11 @@ import {AccountCircle, Security, VpnKey, VerifiedUser} from '@material-ui/icons'
 const ManageAcc = props =>{
 
     const classes = useStyles();
+    const [loading, setLoading] = React.useState(true);
 
     const handleSubmit = (event)=>{
         event.preventDefault();
+        setLoading(!loading);
         if(event.target.newpass.value === event.target.repass.value){
             const userInfo = {
                 username: event.target.username.value,
@@ -29,17 +32,18 @@ const ManageAcc = props =>{
                 }
             }).then(res=>{
                 if(res.status === 200){
-                    alert('Pass changed');
                     props.handleLogout();
-                }else if (res.status != 200){
+                }else if (res.status !== 200){
+                    setLoading(true);
                     alert('Error try again')
                 }
             }).catch(err=>{
-                console.log(err);
+                setLoading(true);
                 alert('Error try again')
             })
             
         }else{
+            setLoading(true);
             alert('Incorrect password');
         }
         
@@ -47,6 +51,8 @@ const ManageAcc = props =>{
 
     return(
         <div className={classes.formMain}>
+            {loading? 
+        <div>
           <Container className={classes.container}>
                 <Avatar src={userImage} className={classes.avatar}/>  
           </Container>
@@ -106,6 +112,7 @@ const ManageAcc = props =>{
                     </Paper>
                 </form>
           </Container>
+          </div>: <Loading/>}
         </div>
     );
 

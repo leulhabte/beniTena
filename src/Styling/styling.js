@@ -1,5 +1,7 @@
 import {makeStyles} from '@material-ui/core';
-import Image2 from '../Res/user.jpg';
+import Image from '../Res/header2.jpg';
+import Image2 from '../Res/about.jpg';
+import Image3 from '../Res/contact.jpg';
 
 const drawerwidth = 220;
 
@@ -96,16 +98,135 @@ const useStyles = makeStyles((theme)=>({
         color: 'white',
         textDecoration: 'none'
     },
-    // header:{
-    //     paddingTop: theme.spacing(2)
-    // },
-    // headTitle:{
-    //     [ theme.breakpoints.up('md')]:{
-    //          marginLeft: theme.spacing(1),
-    //      },
-    //      marginLeft: theme.spacing(0),
-    //      borderLeft: '5px solid green'
-    // },
+    listText2:{
+        color: 'black',
+        textDecoration: 'none'
+    },
+    imageContainer:{
+        display: 'flex',
+        justifyContent: 'center',
+        padding: theme.spacing(3)
+    },
+    moreInfoAvatar:{
+        width: '5rem',
+        height: '5rem'
+    },
+    basicHeader:{
+        fontWeight: 'bold'
+    },
+    infoPaper:{
+        width: '100% !important'
+    },
+    basicContainer:{
+        marginTop: theme.spacing(2)
+    },
+    listContent:{
+        marginLeft: theme.spacing(3)
+    },
+    infoHeader:{
+        display: 'flex',
+        justifyContent: 'center',
+        padding: theme.spacing(3)
+    },
+    homeContainerHead:{
+        width: '100% important',
+        height: theme.spacing(50),
+        display: 'flex',
+        justifyContent: 'center',
+        position: 'relative',
+        background: `url('${Image}') no-repeat center center`,
+        backgroundSize: 'cover'
+    },
+    overlay:{
+        position: 'absolute',
+        top: '0',
+        left: '0',
+        width: '100% !important',
+        height: '100%',
+        opacity: '0.4',
+        backgroundColor: 'black'
+    },
+    homeContainerHead2:{
+        width: '100% important',
+        height: theme.spacing(50),
+        display: 'flex',
+        justifyContent: 'center',
+        position: 'relative',
+        background: `url('${Image2}') no-repeat center center`,
+        backgroundSize: 'cover'
+    },
+    overlay2:{
+        position: 'absolute',
+        top: '0',
+        left: '0',
+        width: '100% !important',
+        height: '100%',
+        opacity: '0.4',
+        backgroundColor: 'black'
+    },
+    homeContainerHead3:{
+        width: '100% important',
+        height: theme.spacing(50),
+        display: 'flex',
+        justifyContent: 'center',
+        position: 'relative',
+        background: `url('${Image3}') no-repeat center center`,
+        backgroundSize: 'cover'
+    },
+    overlay3:{
+        position: 'absolute',
+        top: '0',
+        left: '0',
+        width: '100% !important',
+        height: '100%',
+        opacity: '0.4',
+        backgroundColor: 'black'
+    },
+    homeTitleHolder:{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        padding: theme.spacing(2),
+        alignItems: 'center',
+        color: 'white',
+        zIndex: 1
+    },
+    homeButton:{
+        color: 'white',
+        backgroundColor: 'rgb(128, 188, 49)',
+        marginTop: theme.spacing(2),
+        '&:hover':{
+            backgroundColor: 'rgb(113, 174,33)'
+        },
+        height: '3rem',
+        width: '15%'
+    },
+    homeHeader: {
+        fontWeight: 'bold'
+    },
+    homeBodyText:{
+        marginLeft: theme.spacing(3)
+    },
+    homeBody:{
+        marginTop: theme.spacing(4)
+    },
+    divider:{
+        height: '0.2rem !important',
+        width: '40%',
+        backgroundColor: 'rgb(128, 188, 49)',
+        border: '0px solid',
+        marginTop: '1rem'
+    },
+    container2:{
+        display: 'flex',
+        justifyContent: 'center',
+        paddingTop: theme.spacing(5),
+        flexDirection: 'column',
+        alignItems: 'center'
+    },
+    actionButton:{
+        color: 'Green'
+    }
 }));
 
 export default useStyles;

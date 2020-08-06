@@ -1,21 +1,21 @@
 import React from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import MoreInfo from '../Routes/MoreInfo';
 import {Table, TableContainer, TableHead, TableRow, TableCell, TableBody, ListItem, ListItemText, ListItemIcon, Button, Box, Container, List, IconButton} from '@material-ui/core';  
-import {More, PinDropSharp} from '@material-ui/icons' 
+import {More} from '@material-ui/icons' 
 import useStyles from '../Styling/styling';
 import {withRouter} from 'react-router-dom';
+import Loading from '../Components/Loading';
 
 const View = (props)=>{
     const classes = useStyles();
     const [data, setData] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [total, setTotal] = React.useState(10);
+    const [loading, setLoading] = React.useState(false);
     const [tablePage, setTablePage] = React.useState(0);
-    const [rowPerPage, setRowPerPage] = React.useState(4);
+    const [rowPerPage, setRowPerPage] = React.useState(10);
     const [totalPage, setTotalPage] = React.useState(4);
-    const [currentData, setCurrentData] = React.useState({});
 
     const handleNext = ()=>{
         if(page < totalPage-1){
@@ -27,13 +27,6 @@ const View = (props)=>{
         if(page > 0){
             setPage(page-1);
         }
-    }
-
-    const handleAction = ()=>{
-        props.history.push({
-            pathname: '/more',
-            state: {data: currentData}
-          });
     }
     
     const callApi = ()=>{
@@ -53,21 +46,22 @@ const View = (props)=>{
             setTotal(res.data.results);
             setTablePage(res.data.page);
             setTotalPage(res.data.totalPages);
+            setLoading(true);
             console.log(data)
             
         })
     }
 
-    const emptyRows = totalPage - Math.min(totalPage, data.length - page * totalPage);
 
     React.useEffect(()=>{
+        setLoading(false);
         callApi();
     },[page])
     
     return(
         <div>
+            {loading? 
             <Container className={classes.viewDataContaier}>
-                {/* <Headings title="View Patients"/> */}
                 <TableContainer className={classes.tableContainer}>
                     <Table stickyHeader>
                         <TableHead>
@@ -94,7 +88,7 @@ const View = (props)=>{
                                         align="left"
                                     >
                                         <IconButton onClick={()=>{const info = row; props.history.push({pathname: '/more',state: {data: info}})}}>
-                                            <More/>
+                                            <More className={classes.actionButton}/>
                                         </IconButton>
                                     </TableCell>
                                 </TableRow>
@@ -113,7 +107,7 @@ const View = (props)=>{
                         </ListItem>
                     </List>
                 </Box>   
-            </Container>
+            </Container>: <Loading/>}
             
         </div>
     );

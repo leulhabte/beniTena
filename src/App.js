@@ -5,6 +5,8 @@ import ManageAcc from './user/ModifyUser';
 import ViewData from './Routes/ViewData';
 import Home from './Components/Home';
 import MoreInfo from './Routes/MoreInfo';
+import AboutUs from './Components/AboutUs';
+import ContactUs from './Components/ContactUs';
 import useStyles from './Styling/styling';
 import AuthApi from './AuthApi';
 import Cookies from 'js-cookie';
@@ -21,8 +23,8 @@ function App() {
   }
 
   const handleLogout = ()=>{
-    Cookies.remove('jwt');
     setAuth(false);
+    Cookies.remove('jwt');
   }
 
   // const handleMoreInfo = (data)=>{
@@ -46,13 +48,15 @@ function App() {
     <AuthApi.Provider value={{auth, setAuth}}>
         <BrowserRouter>
           <div className={classes.root}>
-              <Drawer/>
+              <Drawer handleLogout={handleLogout}/>
             <div className={classes.content}>
             <div className={classes.toolbar}/>
             <Switch>
               <ProtectedRoute path="/" exact component={Home} auth={auth}/>
               <ProtectedRoute path="/view" exact component={ViewData} auth={auth}/>
               <ProtectedRoute path="/more" component={MoreInfo} auth={auth}/>
+              <ProtectedRoute path="/about" component={AboutUs} auth={auth}/>
+              <ProtectedRoute path="/contact" component={ContactUs} auth={auth}/>
               <ProtectedLogIn path="/login" component={Login} auth={auth} handleLogin={handleLogin}/>
               <ProtectedLogOut path="/edit" component={ManageAcc} auth={auth} handleLogout={handleLogout}/>
             </Switch>

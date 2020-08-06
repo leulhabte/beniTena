@@ -1,17 +1,37 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
 import useStyles from '../Styling/styling';
+import axios from 'axios';
+import Cookies from 'js-cookie'
 import {Hidden, Drawer, AppBar, Toolbar, List, ListItem, ListItemIcon, ListItemText, Box, Typography, Divider, Badge} from '@material-ui/core';
 import {Visibility, ExitToApp, Settings, Menu, NotificationsActive} from '@material-ui/icons';
 
-const Drawers = ()=>{
+const Drawers = (props)=>{
 
     const classes = useStyles();
+    const [unseen, setUnseen] = React.useState(0);
     const [mobileScreen, setMobileScreen] = React.useState(false);
 
     const hanleMobileScreen = ()=>{
         setMobileScreen(!mobileScreen);
     }
+
+    React.useEffect(()=>{
+        const interval = setInterval(()=>{
+          const user = Cookies.get('jwt');
+            if(user){
+                const token = Cookies.get('jwt');
+                axios.get('unseen', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then(res=>{
+                    setUnseen(res.data.unseen);
+                })
+            }  
+        }, 3000);
+        return ()=>clearInterval(interval) 
+    },[]);
 
     const menuList = (
         <div>
@@ -33,7 +53,7 @@ const Drawers = ()=>{
                 </Link>
                 
                 <Box m={2}/>
-                <ListItem className={classes.itemColour} button>
+                <ListItem className={classes.itemColour} button onClick={props.handleLogout}>
                     <ListItemIcon className={classes.itemColour}><ExitToApp/></ListItemIcon>
                     <ListItemText>Log out</ListItemText>
                 </ListItem>
@@ -56,13 +76,13 @@ const Drawers = ()=>{
                 <Toolbar>
                     <Menu className={classes.menuToggle} onClick={hanleMobileScreen}/>
                     <Box display='flex' justifyContent='center' justifySelf='center' flexGrow={1}>
-                        <Typography variant='subtitle2' className={classes.menuItemColour}>Home</Typography>
+                        <Typography variant='subtitle2' className={classes.menuItemColour}><Link to='/' className={classes.listText2}>Home</Link></Typography>
                         <Box mx={4}/>
-                        <Typography variant='subtitle2' className={classes.menuItemColour}>About Us</Typography>
+                        <Typography variant='subtitle2' className={classes.menuItemColour}><Link to='/about' className={classes.listText2}>About Us</Link></Typography>
                         <Box mx={4}/>
-                        <Typography variant='subtitle2' className={classes.menuItemColour}>Contact Us</Typography>
+                        <Typography variant='subtitle2' className={classes.menuItemColour}><Link to='/contact' className={classes.listText2}>Contact Us</Link></Typography>
                     </Box>
-                    <Badge color='primary' badgeContent={3} max={999}>
+                    <Badge color='primary' badgeContent={unseen} max={999}>
                         <NotificationsActive color='action'/>
                     </Badge>
                 </Toolbar>
